@@ -49,7 +49,7 @@ namespace ImageDownloader
                  _cancellationTokenSource = new CancellationTokenSource();
             try
             {
-                 // DownloadStarted?.Invoke();
+                 DownloadStarted?.Invoke();
                  var i = 0;
                 foreach (var remoteUri in remoteUris)
                 {
