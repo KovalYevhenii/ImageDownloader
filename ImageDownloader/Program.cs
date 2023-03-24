@@ -46,7 +46,6 @@ namespace ImageDownloader
                 else
                 {
                     Console.WriteLine("\nImage downloading Status: {0}", imageDownloader.IsCompleted);
-                      
                     Console.ReadKey();
                     Task.WaitAll(downloadTask);
                 }
