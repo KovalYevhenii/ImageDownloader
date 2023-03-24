@@ -8,12 +8,12 @@ namespace ImageDownloader
         static void Main(string[] args)
         {
             ImageDownloader imageDownloader = new();
-            var cancellationToken = new CancellationTokenSource();
+            CancellationTokenSource cts = new CancellationTokenSource();
 
             imageDownloader.DownloadStarted += () =>
-            {
-                Console.WriteLine("Download started...");
-            };
+                {
+                    Console.WriteLine("Download started...");
+                };
             imageDownloader.DownloadCompleted += () =>
             {
                 Console.WriteLine("Download completed!");
@@ -34,19 +34,29 @@ namespace ImageDownloader
             };
 
             Console.WriteLine("Press 'A' to exit or any other key to check the download status");
-                var downloadTask = imageDownloader.DownloadAsync(remoteUris, cancellationToken);
-               Task.WaitAll(downloadTask);
-            
-            if (Console.ReadKey().Key.ToString().ToUpper() == "A")
+
+            var downloadTask = imageDownloader.DownloadAsync(remoteUris, cts.Token);
+            try
             {
-                imageDownloader.Cancel();
+                if (Console.ReadKey().Key.ToString().ToUpper() == "A")
+                {
+                    cts.Cancel();
+                    throw new OperationCanceledException();
+                }
+                else
+                {
+                    Console.WriteLine("\nImage downloading Status: {0}", imageDownloader.IsCompleted);
+                      
+                    Console.ReadKey();
+                    Task.WaitAll(downloadTask);
+                }
             }
-            else
+            catch (OperationCanceledException)
             {
-                Console.WriteLine("\nImage downloading Status: {0}", imageDownloader.IsCompleted);
-                Console.ReadKey();
+                Console.WriteLine("\nOperation was cancelled");
             }
+
         }
     }
-   
+
 }
