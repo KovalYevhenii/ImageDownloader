@@ -13,8 +13,6 @@ namespace ImageDownloader
     {
         public event Action? DownloadStarted;
         public event Action? DownloadCompleted;
-        public CancellationTokenSource cts = new CancellationTokenSource();
-
         public bool IsCompleted { get; private set; }
         public async Task DownloadAsync(List<string> remoteUris, CancellationToken cancellationToken)
         {
