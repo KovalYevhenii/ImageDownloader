@@ -54,8 +54,6 @@ namespace ImageDownloader
             {
                 Console.WriteLine("\nOperation was cancelled");
             }
-
         }
     }
-
 }
