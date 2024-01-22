@@ -30,7 +30,6 @@ namespace ImageDownloader
                     {
                         using (var myWebClient = new WebClient())
                         {
-                         
                             myWebClient.DownloadFileCompleted += (sender, e) => DownloadCompleted?.Invoke();
                             await myWebClient.DownloadFileTaskAsync(new Uri(remoteUri), fileName);
                         }
@@ -44,6 +43,5 @@ namespace ImageDownloader
                 Console.WriteLine("Error downloading files:{0} ", ex.Message);
             }
         }
-
     }
 }
